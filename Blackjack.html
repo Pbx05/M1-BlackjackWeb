@@ -8,15 +8,43 @@
     <script src="Blackjack.js" defer></script>
 </head>
 <body>
-    <h1>Blackjack</h1>
+    <main class="mesaJuego">
+        <h1>Blackjack</h1>
 
-    <!-- Zona del crupier -->
+        <!-- Zona del crupier -->
+        <section class="zonaJuego">
+            <h2>Crupier - Puntos: 
+                <span id="puntuacionCrupier">0</span>
+            </h2>
 
-    <!-- Zona del jugador -->
+            <div class="cartas" id="cartasCrupier"></div>
+        </section>
 
-    <!-- Mensajes -->
+        <!-- Zona del jugador -->
+        <section class="zonaJuego">
+            <h2>Jugador - Puntos:          
+                <span id="puntuacionJugador">0</span>
+            </h2>
 
-    <!-- Botones -->
+            <div class="cartas" id="cartasJugador"></div>
+        </section> 
+
+        <!-- Mensajes -->
+        <p id="mensajeAvisos"></p>
+
+        <!-- Botones -->
+        <div class="controles">
+            <button class="botones" id="botonPedir">Pedir Carta</button>
+            <button class="botones" id="botonPlantarse">Plantarse</button>
+        </div>
+    </main>
+
+    <div class="ventanaOculta" id="ventanaFinPartida">
+        <div class="contenidoVentanaOculta">
+            <h2 id="mensajeFinPartida"></h2>
+            <button id="btnReiniciar" class="botones">Jugar de nuevo</button>
+        </div>
+    </div>
 
 </body>
 </html>
