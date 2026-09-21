@@ -1,7 +1,14 @@
 const palos = ["clubs", "hearts", "diamonds", "spades"];
 const valores = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"];
 
+const divCartasCrupier = document.querySelector("#cartasCrupier");
+const divCartasJugador = document.querySelector("#cartasJugador");
+const spanPuntosCrupier = document.querySelector("#puntuacionCrupier");
+const spanPuntosJugador = document.querySelector("#puntuacionJugador");
+
 let baraja = [];
+let manoCrupier = [];
+let manoJugador = [];
 
 function crearBaraja(){
     baraja = [];
@@ -51,20 +58,32 @@ function contarPuntuacion(mano){
     return puntos;
 }
 
+function pintarCarta(carta, contenedor){
+    const imgCarta = document.createElement("img");
 
+    // Cunstruyo la ruta de la imagen usando template literals
+    imgCarta.src = `cartas/${carta.valor}_of_${carta.palo}.png`;
+    contenedor.appendChild(imgCarta);
+}
+
+function actualizarPuntuacion(){
+    const puntosCrupier = contarPuntuacion(manoCrupier);
+    const puntosJugador = contarPuntuacion(manoJugador);
+
+    spanPuntosCrupier.textContent = puntosCrupier;
+    spanPuntosJugador.textContent = puntosJugador;
+}
 
 crearBaraja();
 barajear();
 
 // Pruebas
-console.log(baraja);
-const manoDePrueba = [
-    { valor: "ace", palo: "hearts" },
-    { valor: "9", palo: "clubs" },
-    { valor: "3", palo: "spades" },
-    { valor: "4", palo: "spades" },
-    { valor: "ace", palo: "hearts" },
-    { valor: "ace", palo: "hearts" },
-    { valor: "2", palo: "hearts" },
-];
-console.log("Puntos de la prueba:", contarPuntuacion(manoDePrueba));
+const cartaRobada = baraja.pop(); 
+manoJugador.push(cartaRobada);
+pintarCarta(cartaRobada, divCartasJugador);
+
+const carta2 = baraja.pop();
+manoJugador.push(carta2);
+pintarCarta(carta2, divCartasJugador);
+
+actualizarPuntuacion();
