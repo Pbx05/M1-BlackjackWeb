@@ -23,7 +23,48 @@ function barajear(){
     }
 }
 
+function contarPuntuacion(mano){
+    let puntos = 0;
+    let ases = 0;
+
+    for(const carta of mano){
+        if(carta.valor === "jack" || carta.valor === "queen" || carta.valor === "king"){
+            puntos += 10;
+        } else if(carta.valor === "ace"){
+            puntos += 11;
+            ases++;
+        } else {
+            puntos += Number(carta.valor);
+        }
+    }
+
+    // Hago este while para comprobar que en el caso de que haya algun as en la mano y esta se pase de 21, el as pase de valor 11 a 1
+    while(puntos > 21 && ases > 0){
+        puntos -= 10;
+        ases--;
+    }
+
+    if(puntos === 21){
+        puntos = "Blackjack";
+    }
+
+    return puntos;
+}
+
+
+
 crearBaraja();
 barajear();
 
+// Pruebas
 console.log(baraja);
+const manoDePrueba = [
+    { valor: "ace", palo: "hearts" },
+    { valor: "9", palo: "clubs" },
+    { valor: "3", palo: "spades" },
+    { valor: "4", palo: "spades" },
+    { valor: "ace", palo: "hearts" },
+    { valor: "ace", palo: "hearts" },
+    { valor: "2", palo: "hearts" },
+];
+console.log("Puntos de la prueba:", contarPuntuacion(manoDePrueba));
