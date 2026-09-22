@@ -7,10 +7,14 @@ const spanPuntosCrupier = document.querySelector("#puntuacionCrupier");
 const spanPuntosJugador = document.querySelector("#puntuacionJugador");
 const btnPedirCarta = document.querySelector("#botonPedir");
 const btnPlantarse = document.querySelector("#botonPlantarse");
+const ventenaFinPartida = document.querySelector("#ventanaFinPartida");
+const mensajeFinPartida = document.querySelector("#mensajeFinPartida");
+const btnReiniciar = document.querySelector("#botonReiniciar");
 
 let baraja = [];
 let manoCrupier = [];
 let manoJugador = [];
+let cartaOculta;
 
 let puntosCrupier = 0;
 let puntosJugador = 0;
@@ -87,21 +91,57 @@ function pedirCarta(){
     pintarCarta(cartaNueva, divCartasJugador);
     actualizarPuntuacion();
     if(puntosJugador > 21){
-        const carta2Crupier = baraja.pop();
-        manoCrupier.push(carta2Crupier);
-        pintarCarta(carta2Crupier, divCartasCrupier);
-        actualizarPuntuacion();
-        alert("Has perdido tienes mas de 21");
-    } 
+        calcularResultado();
+    }
 }
 
 function plantarse(){
+    manoCrupier.push(cartaOculta);
+    pintarCarta(cartaOculta, divCartasCrupier);
+    actualizarPuntuacion();
+
     while(puntosCrupier < 17){
         const cartaCrupier = baraja.pop();
         manoCrupier.push(cartaCrupier);
         pintarCarta(cartaCrupier, divCartasCrupier);
         actualizarPuntuacion();
     }
+    calcularResultado();
+}
+
+function calcularResultado(){
+    let mensaje;
+
+    if(puntosCrupier > 21){
+        mensaje = "Has ganado el crupier se ha pasado de 21 :)"; 
+    } else if(puntosJugador > 21){
+        mensaje = "Has perdido te has pasado de 21 :(";
+    } else if(puntosCrupier === puntosJugador){
+        mensaje = "Empate, suerte a la proxima";
+    } else if(puntosCrupier === "Blackjack" && puntosJugador !== "Blackjack"){
+        mensaje = "Has perdido el crupier tenia blackjack :(";
+    } else if(puntosCrupier !== "Blackjack" && puntosJugador === "Blackjack"){
+        mensaje = "Has ganado con un blackjack!! :)"; 
+    } else if(puntosJugador > puntosCrupier){
+        mensaje = "Has ganado :)";
+    } else {
+        mensaje = "Has perdido :(";
+    }
+
+    mensajeFinPartida.textContent = mensaje;
+    ventenaFinPartida.style.display = "flex";
+}
+
+function jugarDeNuevo(){
+    // Limpio todo para poder empezar de nuevo
+    ventenaFinPartida.style.display = "none";
+    manoJugador = [];
+    manoCrupier = [];
+    puntosCrupier = 0;
+    puntosJugador = 0;
+    divCartasCrupier.textContent = "";
+    divCartasJugador.textContent = "";
+    iniciarPartida();
 }
 
 function iniciarPartida(){
@@ -111,6 +151,8 @@ function iniciarPartida(){
     const carta1Jugador = baraja.pop();
     const carta1Crupier = baraja.pop();
     const carta2Jugador = baraja.pop();
+    // Carta que se queda oculta del crupier, la saco de la baraja 
+    cartaOculta = baraja.pop();
 
     manoJugador.push(carta1Jugador, carta2Jugador);
     pintarCarta(carta1Jugador, divCartasJugador);
@@ -124,4 +166,5 @@ function iniciarPartida(){
 
 btnPedirCarta.addEventListener("click", pedirCarta);
 btnPlantarse.addEventListener("click", plantarse);
+btnReiniciar.addEventListener("click", jugarDeNuevo);
 iniciarPartida();
