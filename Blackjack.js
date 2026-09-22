@@ -5,10 +5,15 @@ const divCartasCrupier = document.querySelector("#cartasCrupier");
 const divCartasJugador = document.querySelector("#cartasJugador");
 const spanPuntosCrupier = document.querySelector("#puntuacionCrupier");
 const spanPuntosJugador = document.querySelector("#puntuacionJugador");
+const btnPedirCarta = document.querySelector("#botonPedir");
+const btnPlantarse = document.querySelector("#botonPlantarse");
 
 let baraja = [];
 let manoCrupier = [];
 let manoJugador = [];
+
+let puntosCrupier = 0;
+let puntosJugador = 0;
 
 function crearBaraja(){
     baraja = [];
@@ -33,6 +38,7 @@ function barajear(){
 function contarPuntuacion(mano){
     let puntos = 0;
     let ases = 0;
+    let numCartasSacadas = 0;
 
     for(const carta of mano){
         if(carta.valor === "jack" || carta.valor === "queen" || carta.valor === "king"){
@@ -43,6 +49,7 @@ function contarPuntuacion(mano){
         } else {
             puntos += Number(carta.valor);
         }
+        numCartasSacadas++;
     }
 
     // Hago este while para comprobar que en el caso de que haya algun as en la mano y esta se pase de 21, el as pase de valor 11 a 1
@@ -51,7 +58,7 @@ function contarPuntuacion(mano){
         ases--;
     }
 
-    if(puntos === 21){
+    if(puntos === 21 && numCartasSacadas === 2){
         puntos = "Blackjack";
     }
 
@@ -67,23 +74,54 @@ function pintarCarta(carta, contenedor){
 }
 
 function actualizarPuntuacion(){
-    const puntosCrupier = contarPuntuacion(manoCrupier);
-    const puntosJugador = contarPuntuacion(manoJugador);
+    puntosCrupier = contarPuntuacion(manoCrupier);
+    puntosJugador = contarPuntuacion(manoJugador);
 
     spanPuntosCrupier.textContent = puntosCrupier;
     spanPuntosJugador.textContent = puntosJugador;
 }
 
-crearBaraja();
-barajear();
+function pedirCarta(){
+    const cartaNueva = baraja.pop();
+    manoJugador.push(cartaNueva);
+    pintarCarta(cartaNueva, divCartasJugador);
+    actualizarPuntuacion();
+    if(puntosJugador > 21){
+        const carta2Crupier = baraja.pop();
+        manoCrupier.push(carta2Crupier);
+        pintarCarta(carta2Crupier, divCartasCrupier);
+        actualizarPuntuacion();
+        alert("Has perdido tienes mas de 21");
+    } 
+}
 
-// Pruebas
-const cartaRobada = baraja.pop(); 
-manoJugador.push(cartaRobada);
-pintarCarta(cartaRobada, divCartasJugador);
+function plantarse(){
+    while(puntosCrupier < 17){
+        const cartaCrupier = baraja.pop();
+        manoCrupier.push(cartaCrupier);
+        pintarCarta(cartaCrupier, divCartasCrupier);
+        actualizarPuntuacion();
+    }
+}
 
-const carta2 = baraja.pop();
-manoJugador.push(carta2);
-pintarCarta(carta2, divCartasJugador);
+function iniciarPartida(){
+    crearBaraja();
+    barajear();
 
-actualizarPuntuacion();
+    const carta1Jugador = baraja.pop();
+    const carta1Crupier = baraja.pop();
+    const carta2Jugador = baraja.pop();
+
+    manoJugador.push(carta1Jugador, carta2Jugador);
+    pintarCarta(carta1Jugador, divCartasJugador);
+    pintarCarta(carta2Jugador, divCartasJugador);
+
+    manoCrupier.push(carta1Crupier);
+    pintarCarta(carta1Crupier, divCartasCrupier);
+
+    actualizarPuntuacion();
+}
+
+btnPedirCarta.addEventListener("click", pedirCarta);
+btnPlantarse.addEventListener("click", plantarse);
+iniciarPartida();
