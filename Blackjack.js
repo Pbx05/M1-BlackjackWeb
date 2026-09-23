@@ -128,8 +128,10 @@ function calcularResultado(){
         mensaje = "Has perdido :(";
     }
 
+    setTimeout(() => {
     mensajeFinPartida.textContent = mensaje;
     ventenaFinPartida.style.display = "flex";
+    }, 800);
 }
 
 function jugarDeNuevo(){
@@ -142,6 +144,12 @@ function jugarDeNuevo(){
     divCartasCrupier.textContent = "";
     divCartasJugador.textContent = "";
     iniciarPartida();
+}
+
+function modoOscuro(event){
+    if(event.key === "d"){
+        document.body.classList.toggle("modo-oscuro");
+    }
 }
 
 function iniciarPartida(){
@@ -167,4 +175,5 @@ function iniciarPartida(){
 btnPedirCarta.addEventListener("click", pedirCarta);
 btnPlantarse.addEventListener("click", plantarse);
 btnReiniciar.addEventListener("click", jugarDeNuevo);
+document.addEventListener("keydown", modoOscuro);
 iniciarPartida();
