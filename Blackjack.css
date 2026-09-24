@@ -88,6 +88,31 @@ h2{
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 }
 
+.puntuacionesFinales {
+    margin: 15px 0 20px 0;
+    padding: 15px;
+    background-color: #e8f5e9; /* Verde muy suave para destacar */
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.puntuacionesFinales p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #1a472a;
+}
+
+/* Estilos para el mensaje secreto */
+#mensajeSecreto {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 15px;
+    display: none; /* Fundamental: permanece invisible hasta que lo cambies en JS */
+}
+
 body.modo-oscuro {
     background-color: #121212;
 }
@@ -107,4 +132,16 @@ body.modo-oscuro .contenidoVentanaOculta {
     background-color: #242424;
     color: white;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
+}
+
+body.modo-oscuro .puntuacionesFinales {
+    background-color: #1a1a1a;
+}
+
+body.modo-oscuro .puntuacionesFinales p {
+    color: #fff;
+}
+
+body.modo-oscuro #mensajeSecreto {
+    color: #bbb;
 }
