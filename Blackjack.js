@@ -8,6 +8,11 @@ const spanPuntosJugador = document.querySelector("#puntuacionJugador");
 const btnPedirCarta = document.querySelector("#botonPedir");
 const btnPlantarse = document.querySelector("#botonPlantarse");
 const btnReiniciar = document.querySelector("#botonReiniciar");
+const spanPuntosFinalesCrupier = document.querySelector("#puntosFinalesCrupier");
+const spanpuntosFinalesJugador = document.querySelector("#puntosFinalesJugador");
+const ventanaFinPartida = document.querySelector("#ventanaFinPartida");
+const mensajeFinPartida = document.querySelector("#mensajeFinPartida");
+const mensajeOculto = document.querySelector("#mensajeSecreto");
 
 let baraja = [];
 let manoCrupier = [];
@@ -116,11 +121,6 @@ function plantarse(){
 function calcularResultado(){
     let mensaje;
     let partidaGanada = false;
-    const spanPuntosFinalesCrupier = document.querySelector("#puntosFinalesCrupier");
-    const spanpuntosFinalesJugador = document.querySelector("#puntosFinalesJugador");
-    const ventanaFinPartida = document.querySelector("#ventanaFinPartida");
-    const mensajeFinPartida = document.querySelector("#mensajeFinPartida");
-    const mensajeOculto = document.querySelector("#mensajeSecreto");
 
     if(jugadorBlackjack && !crupierBlackjack){
         mensaje = "Has ganado con un blackjack!! :)";
@@ -141,7 +141,7 @@ function calcularResultado(){
         mensaje = "Has perdido :(";
     }
 
-    // setTimeout lo utilizo para poder aplicar un delay de 8 milisegundos 
+    // setTimeout lo utilizo para poder aplicar un delay de 800 milisegundos 
     setTimeout(() => {
         mensajeFinPartida.textContent = mensaje;
         spanPuntosFinalesCrupier.textContent = crupierBlackjack ? "Blackjack" : puntosCrupier;
