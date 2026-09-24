@@ -91,7 +91,7 @@ h2{
 .puntuacionesFinales {
     margin: 15px 0 20px 0;
     padding: 15px;
-    background-color: #e8f5e9; /* Verde muy suave para destacar */
+    background-color: #e8f5e9;
     border-radius: 8px;
     display: flex;
     justify-content: space-around;
@@ -104,13 +104,12 @@ h2{
     color: #1a472a;
 }
 
-/* Estilos para el mensaje secreto */
 #mensajeSecreto {
     font-size: 0.9rem;
     font-style: italic;
     color: #666;
     margin-bottom: 15px;
-    display: none; /* Fundamental: permanece invisible hasta que lo cambies en JS */
+    display: none;
 }
 
 body.modo-oscuro {

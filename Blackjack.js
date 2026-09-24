@@ -141,6 +141,7 @@ function calcularResultado(){
         mensaje = "Has perdido :(";
     }
 
+    // setTimeout lo utilizo para poder aplicar un delay de 8 milisegundos 
     setTimeout(() => {
         mensajeFinPartida.textContent = mensaje;
         spanPuntosFinalesCrupier.textContent = crupierBlackjack ? "Blackjack" : puntosCrupier;
@@ -165,6 +166,7 @@ function jugarDeNuevo(){
 }
 
 function modoOscuro(event){
+    // Activa o desactiva el modo oscuro con el toggle
     if(event.key === "d"){
         document.body.classList.toggle("modo-oscuro");
     }
